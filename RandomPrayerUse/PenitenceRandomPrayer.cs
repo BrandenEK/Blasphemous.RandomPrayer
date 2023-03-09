@@ -5,7 +5,7 @@ namespace RandomPrayerUse
 {
     public class PenitenceRandomPrayer : ModPenitence
     {
-        public PenitenceRandomPrayer(Sprite inProgress, Sprite completed, Sprite abandoned, Sprite gameplay, Sprite selection) : base(inProgress, completed, abandoned, gameplay, selection) { }
+        public PenitenceRandomPrayer(Sprite inProgress, Sprite completed, Sprite abandoned, Sprite gameplay, Sprite chooseSelected, Sprite chooseUnselected) : base(inProgress, completed, abandoned, gameplay, chooseSelected, chooseUnselected) { }
 
         protected override string Id => "PE_RANDOM_PRAYER";
 
