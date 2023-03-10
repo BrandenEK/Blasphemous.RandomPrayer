@@ -25,7 +25,9 @@ namespace RandomPrayerUse
 
             if (menuSlotImages != null && gameSlotImages != null && chooseSelectedSlotImages != null && chooseUnselectedSlotImages != null)
             {
-                RegisterPenitence(new PenitenceRandomPrayer(menuSlotImages[0], menuSlotImages[1], menuSlotImages[2], gameSlotImages[0], chooseSelectedSlotImages[0], chooseUnselectedSlotImages[0]));
+                PenitenceRandomPrayer randomPrayerPenitence = new PenitenceRandomPrayer();
+                randomPrayerPenitence.SetImages(menuSlotImages[0], menuSlotImages[1], menuSlotImages[2], gameSlotImages[0], chooseSelectedSlotImages[0], chooseUnselectedSlotImages[0]);
+                RegisterPenitence(randomPrayerPenitence);
             }
 
             rng = new System.Random();

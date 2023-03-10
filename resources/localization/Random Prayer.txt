@@ -1,0 +1,14 @@
+lang: en
+pname: Penitence of the Misheard Words
+pdesc1: -Your pray is full of intention, but lacks precision.  The Miracle's whim can be cruel when understanding you.
+pdesc2: -Prayers can not be equipped, and when casting, a completly random one will be invoked.
+
+lang: es
+pname: 
+pdesc1: 
+pdesc2: 
+
+lang: zh
+pname: 
+pdesc1: 
+pdesc2: 
