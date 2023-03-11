@@ -4,11 +4,11 @@ pdesc1: -Your pray is full of intention, but lacks precision.  The Miracle's whi
 pdesc2: -Prayers can not be equipped, and when casting, a completly random one will be invoked.
 
 lang: es
-pname: 
-pdesc1: 
-pdesc2: 
+pname: Penitencia de la Palabra Desoída
+pdesc1: -Tu plegaria está colmada de intención, pero es parca en precisión. La veleidad del Milagro puede ser cruel al entenderte.
+pdesc2: -No te puedes equipar los rezos y al invocarlos se activará uno al azar.
 
 lang: zh
-pname: 
-pdesc1: 
-pdesc2: 
+pname: 流言忏悔
+pdesc1: -你的祈祷真诚但无序，让奇迹误解了你的请求
+pdesc2: -你无法装备祷文，吟诵时会随机触发一篇祷文的效果
