@@ -10,14 +10,14 @@ using Gameplay.GameControllers.Penitent.Abilities;
 namespace RandomPrayerUse
 {
     // Dont allow equipping prayers
-    [HarmonyPatch(typeof(InventoryManager), "SetPrayerInSlot", typeof(int), typeof(Prayer))]
-    public class InventoryManager_Patch
-    {
-        public static bool Prefix()
-        {
-            return false;
-        }
-    }
+    //[HarmonyPatch(typeof(InventoryManager), "SetPrayerInSlot", typeof(int), typeof(Prayer))]
+    //public class InventoryManager_Patch
+    //{
+    //    public static bool Prefix()
+    //    {
+    //        return false;
+    //    }
+    //}
 
     // Always return same fervour cost
     //[HarmonyPatch(typeof(InventoryManager), "")]

@@ -13,22 +13,13 @@ namespace RandomPrayerUse
 
         protected override void Initialize()
         {
-            LogError("Initialization for random prayer use");
-            if (!FileUtil.loadDataImages("menuSlots.png", 16, 16, 32, 0, true, out Sprite[] menuSlotImages))
-                LogError("Failed to load slot images!");
-            if (!FileUtil.loadDataImages("gameSlot.png", 18, 18, 32, 0, true, out Sprite[]  gameSlotImages))
-                LogError("Failed to load slot images!");
-            if (!FileUtil.loadDataImages("chooseSlotSelected.png", 94, 110, 32, 0, true, out Sprite[]  chooseSelectedSlotImages))
-                LogError("Failed to load slot images!");
-            if (!FileUtil.loadDataImages("chooseSlotUnselected.png", 92, 108, 32, 0, true, out Sprite[] chooseUnselectedSlotImages))
-                LogError("Failed to load slot images!");
-
-            if (menuSlotImages != null && gameSlotImages != null && chooseSelectedSlotImages != null && chooseUnselectedSlotImages != null)
-            {
-                PenitenceRandomPrayer randomPrayerPenitence = new PenitenceRandomPrayer();
-                randomPrayerPenitence.SetImages(menuSlotImages[0], menuSlotImages[1], menuSlotImages[2], gameSlotImages[0], chooseSelectedSlotImages[0], chooseUnselectedSlotImages[0]);
-                RegisterPenitence(randomPrayerPenitence);
-            }
+            RegisterPenitence(new PenitenceRandomPrayer());
+            RegisterItem(new BootsRelic().AddEffect<DebugEffect>());
+            RegisterItem(new TestBead().AddEffect<TestEffect>());
+            RegisterItem(new TestPrayer().AddEffect<TestEffect>());
+            RegisterItem(new TestSwordHeart().AddEffect<TestEffect>());
+            RegisterItem(new TestQuestItem());
+            RegisterItem(new TestCollectible());
 
             rng = new System.Random();
         }
