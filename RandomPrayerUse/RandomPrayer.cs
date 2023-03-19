@@ -14,12 +14,7 @@ namespace RandomPrayerUse
         protected override void Initialize()
         {
             RegisterPenitence(new PenitenceRandomPrayer());
-            RegisterItem(new BootsRelic().AddEffect<DebugEffect>());
-            RegisterItem(new TestBead().AddEffect<TestEffect>());
-            RegisterItem(new TestPrayer().AddEffect<TestEffect>());
-            RegisterItem(new TestSwordHeart().AddEffect<TestEffect>());
-            RegisterItem(new TestQuestItem());
-            RegisterItem(new TestCollectible());
+            RegisterItem(new BeadRandomPrayer().AddEffect<RandomPrayerBeadEffect>());
 
             rng = new System.Random();
         }

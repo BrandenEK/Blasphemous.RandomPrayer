@@ -1,4 +1,4 @@
-﻿using ModdingAPI;
+﻿using ModdingAPI.Penitences;
 using Framework.Managers;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace RandomPrayerUse
 
         protected override string Name => Main.RandomPrayer.Localize("pname");
 
-        protected override string Description => Main.RandomPrayer.Localize("pdesc1") + "\n" + Main.RandomPrayer.Localize("pdesc2");
+        protected override string Description => Main.RandomPrayer.Localize("pdesc");
 
         protected override string ItemIdToGive => null;
 
