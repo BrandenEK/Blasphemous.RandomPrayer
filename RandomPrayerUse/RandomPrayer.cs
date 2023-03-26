@@ -1,5 +1,7 @@
 ﻿using ModdingAPI;
 using UnityEngine;
+using Framework.Managers;
+using Framework.Inventory;
 
 namespace RandomPrayerUse
 {
@@ -8,15 +10,22 @@ namespace RandomPrayerUse
         public RandomPrayer(string modId, string modName, string modVersion) : base(modId, modName, modVersion) { }
         public const float FervourCost = 35f;
 
-        public bool UseRandomPrayer { get; set; }
-        public System.Random rng { get; private set; }
+        private bool m_UseRandomPrayer;
+        public bool UseRandomPrayer
+        {
+            get { return m_UseRandomPrayer; }
+            set
+            {
+                m_UseRandomPrayer = value;
+                if (value)
+                    Core.InventoryManager.SetPrayerInSlot(0, (Prayer)null);
+            }
+        }
 
         protected override void Initialize()
         {
             RegisterPenitence(new PenitenceRandomPrayer());
             RegisterItem(new BeadRandomPrayer().AddEffect<RandomPrayerBeadEffect>());
-
-            rng = new System.Random();
         }
 
         private Sprite m_FrameImage;

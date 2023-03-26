@@ -12,7 +12,7 @@ namespace RandomPrayerUse
 
         protected override string Description => Main.RandomPrayer.Localize("pdesc");
 
-        protected override string ItemIdToGive => null;
+        protected override string ItemIdToGive => "RB401";
 
         protected override InventoryManager.ItemType ItemTypeToGive => InventoryManager.ItemType.Bead;
 
