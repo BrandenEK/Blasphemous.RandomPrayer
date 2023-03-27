@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using Framework.Managers;
 using Framework.Inventory;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace RandomPrayerUse
 {
@@ -20,9 +19,7 @@ namespace RandomPrayerUse
             get { return m_UseRandomPrayer; }
             set
             {
-                LogWarning("Setting random prayer to " + value);
                 m_UseRandomPrayer = value;
-
                 if (value)
                 {
                     foreach (Prayer prayer in Core.InventoryManager.GetAllPrayers())
@@ -40,43 +37,8 @@ namespace RandomPrayerUse
 
         public bool DecreasedFervourCost { get; set; }
         public bool DisplayPrayerBox { get; set; }
-
-        protected override void Initialize()
-        {
-            RegisterPenitence(new PenitenceRandomPrayer());
-            RegisterItem(new BeadRandomPrayer().AddEffect<RandomPrayerBeadEffect>());
-            DisableFileLogging = true;
-        }
-
-        protected override void LevelLoaded(string oldLevel, string newLevel)
-        {
-            if (prayerCosts == null)
-                StorePrayerCosts();
-            if (newLevel != "MainMenu" && UseRandomPrayer)
-                RandomizeNextPrayer();
-        }
-
-        protected override void Update()
-        {
-            if (PrayerImage != null && Core.Logic.Penitent != null)
-            {
-                bool usingPrayer = Core.Logic.Penitent.PrayerCast.IsUsingAbility;
-                PrayerImage.transform.parent.gameObject.SetActive(usingPrayer && DisplayPrayerBox);
-                if (DisplayPrayerBox && !usingPrayer)
-                    DisplayPrayerBox = false;
-            }
-        }
-
-        public void RandomizeNextPrayer()
-        {
-            // If currently using a prayer, dont set new one
-            if (Core.Logic.Penitent.PrayerCast.IsUsingAbility)
-                return;
-
-            ReadOnlyCollection<Prayer> allPrayers = Core.InventoryManager.GetAllPrayers();
-            int index = Random.RandomRangeInt(0, allPrayers.Count);
-            Core.InventoryManager.SetPrayerInSlot(0, allPrayers[index]); // Cant do this if prayer is currently active
-        }
+        public Image PrayerImage { get; set; }
+        private PrayerConfig Config { get; set; }
 
         private Sprite m_FrameImage;
         public Sprite FrameImage
@@ -100,14 +62,74 @@ namespace RandomPrayerUse
             }
         }
 
-        public Image PrayerImage { get; set; }
-
         private Dictionary<string, int> prayerCosts;
         private void StorePrayerCosts()
         {
             prayerCosts = new Dictionary<string, int>();
             foreach (Prayer prayer in Core.InventoryManager.GetAllPrayers())
                 prayerCosts.Add(prayer.id, prayer.fervourNeeded);
+        }
+
+        protected override void Initialize()
+        {
+            RegisterPenitence(new PenitenceRandomPrayer());
+            RegisterItem(new BeadRandomPrayer().AddEffect<RandomPrayerBeadEffect>());
+            DisableFileLogging = true;
+
+            Config = FileUtil.loadConfig<PrayerConfig>();
+        }
+
+        protected override void LevelLoaded(string oldLevel, string newLevel)
+        {
+            if (prayerCosts == null)
+                StorePrayerCosts();
+            if (newLevel == "MainMenu")
+            {
+                UseRandomPrayer = false;
+                DecreasedFervourCost = false;
+            }
+            else if (UseRandomPrayer)
+                RandomizeNextPrayer();
+        }
+
+        protected override void Update()
+        {
+            if (PrayerImage != null && Core.Logic.Penitent != null)
+            {
+                bool usingPrayer = Core.Logic.Penitent.PrayerCast.IsUsingAbility;
+                PrayerImage.transform.parent.gameObject.SetActive(usingPrayer && DisplayPrayerBox);
+                if (DisplayPrayerBox && !usingPrayer)
+                    DisplayPrayerBox = false;
+            }
+        }
+
+        public void RandomizeNextPrayer()
+        {
+            // If currently using a prayer, dont set new one
+            if (Core.Logic.Penitent.PrayerCast.IsUsingAbility)
+                return;
+
+            // Get list of possible prayers based on config
+            List<Prayer> possiblePrayers = new List<Prayer>();
+            if (Config.OnlyShuffleOwnedPrayers)
+                possiblePrayers.AddRange(Core.InventoryManager.GetPrayersOwned());
+            else
+                possiblePrayers.AddRange(Core.InventoryManager.GetAllPrayers());
+            if (Config.RemoveMirabras)
+            {
+                for (int i = 0; i < possiblePrayers.Count; i++)
+                {
+                    if (possiblePrayers[i].id == "PR202")
+                    {
+                        possiblePrayers.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+            
+            //LogWarning("Getting random prayer from " + possiblePrayers.Count + " options");
+            Prayer prayer = possiblePrayers.Count == 0 ? null : possiblePrayers[Random.RandomRangeInt(0, possiblePrayers.Count)];
+            Core.InventoryManager.SetPrayerInSlot(0, prayer);
         }
     }
 }

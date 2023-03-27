@@ -43,6 +43,17 @@ namespace RandomPrayerUse
         }
     }
 
+    // Recalculate next prayer when obtaining new one
+    [HarmonyPatch(typeof(InventoryManager), "AddPrayer", typeof(Prayer))]
+    public class InventoryAdd_Patch
+    {
+        public static void Postfix()
+        {
+            if (Main.RandomPrayer.UseRandomPrayer)
+                Main.RandomPrayer.RandomizeNextPrayer();
+        }
+    }
+
     // Load images for prayer background
     [HarmonyPatch(typeof(NewInventory_GridItem), "Awake")]
     public class InvGridItemLoad_Patch
@@ -118,7 +129,7 @@ namespace RandomPrayerUse
             frameRect.anchorMin = new Vector2(0f, 1f);
             frameRect.anchorMax = new Vector2(0f, 1f);
             frameRect.pivot = new Vector2(0f, 1f);
-            frameRect.anchoredPosition = new Vector2(40f, -42f);
+            frameRect.anchoredPosition = new Vector2(40f, -60f);
             frameRect.sizeDelta = new Vector2(28f, 28f);
             frameObject.GetComponent<Image>().sprite = Main.RandomPrayer.BackImage;
             frameObject.SetActive(false);
@@ -136,21 +147,4 @@ namespace RandomPrayerUse
             Main.RandomPrayer.PrayerImage.sprite = null;
         }
     }
-
-    // GetPrayerInSlot should return 2 diff things - The current prayer if checking, or Next prayer is about to use
-
-    // Get random prayer instead of equipped one
-    //[HarmonyPatch(typeof(PrayerUse), "GetEquippedPrayer")]
-    //public class PrayerUseGet_Patch
-    //{
-    //    public static bool Prefix(ref Prayer __result)
-    //    {
-    //        if (Main.RandomPrayer.UseRandomPrayer)
-    //        {
-    //            __result = Main.RandomPrayer.NextPrayer;
-    //            return false;
-    //        }
-    //        return true;
-    //    }
-    //}
 }
