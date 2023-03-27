@@ -1,6 +1,4 @@
 ﻿using HarmonyLib;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UI;
 using Framework.Managers;
@@ -40,19 +38,31 @@ namespace RandomPrayerUse
         }
     }
 
+    // Set image for ui box when starting prayer
+    [HarmonyPatch(typeof(PrayerUse), "OnCastStart")]
+    public class PrayerUseStart_Patch
+    {
+        public static void Postfix()
+        {
+            if (Main.RandomPrayer.UseRandomPrayer && Main.RandomPrayer.PrayerImage != null)
+                Main.RandomPrayer.PrayerImage.sprite = Core.InventoryManager.GetPrayerInSlot(0).picture;
+        }
+    }
+
     // Set next random prayer when done using previous one
     [HarmonyPatch(typeof(PrayerUse), "EndUsingPrayer")]
     public class PrayerUseEnd_Patch
     {
         public static void Postfix()
         {
-            Main.RandomPrayer.RandomizeNextPrayer();
+            if (Main.RandomPrayer.UseRandomPrayer)
+                Main.RandomPrayer.RandomizeNextPrayer();
         }
     }
 
     // Create ui box to display current prayer
     [HarmonyPatch(typeof(PlayerFervour), "OnLevelLoaded")]
-    public class PlayerFervour_Patch
+    public class PlayerFervourCreate_Patch
     {
         public static void Postfix(PlayerFervour __instance, GameObject ___normalPrayerInUse)
         {

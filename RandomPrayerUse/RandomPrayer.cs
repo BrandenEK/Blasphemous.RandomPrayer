@@ -5,7 +5,6 @@ using Framework.Managers;
 using Framework.Inventory;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Gameplay.UI.Others.UIGameLogic;
 
 namespace RandomPrayerUse
 {
@@ -53,6 +52,14 @@ namespace RandomPrayerUse
                 StorePrayerCosts();
             if (newLevel != "MainMenu" && UseRandomPrayer)
                 RandomizeNextPrayer();
+        }
+
+        protected override void Update()
+        {
+            if (PrayerImage != null && Core.Logic.Penitent != null)
+            {
+                PrayerImage.transform.parent.gameObject.SetActive(UseRandomPrayer && Core.Logic.Penitent.PrayerCast.IsUsingAbility);
+            }
         }
 
         public void RandomizeNextPrayer()
