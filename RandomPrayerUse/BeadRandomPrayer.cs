@@ -33,16 +33,16 @@ namespace RandomPrayerUse
     {
         protected override void ApplyEffect()
         {
-            Main.RandomPrayer.UseRandomPrayer = true;
             Main.RandomPrayer.DecreasedFervourCost = true;
+            Main.RandomPrayer.UseRandomPrayer = true;
         }
 
         protected override void RemoveEffect()
         {
+            Main.RandomPrayer.DecreasedFervourCost = false;
             IPenitence pen = Core.PenitenceManager.GetCurrentPenitence();
             if (pen == null || pen.Id != "PE_RANDOM_PRAYER")
                 Main.RandomPrayer.UseRandomPrayer = false;
-            Main.RandomPrayer.DecreasedFervourCost = false;
         }
     }
 }

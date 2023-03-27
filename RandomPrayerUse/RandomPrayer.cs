@@ -11,7 +11,8 @@ namespace RandomPrayerUse
     public class RandomPrayer : Mod
     {
         public RandomPrayer(string modId, string modName, string modVersion) : base(modId, modName, modVersion) { }
-        public const int FervourCost = 35;
+        private const int NORMAL_FERVOUR_COST = 35;
+        private const int REDUCED_FERVOUR_COST = 25;
 
         private bool m_UseRandomPrayer;
         public bool UseRandomPrayer
@@ -25,7 +26,7 @@ namespace RandomPrayerUse
                 if (value)
                 {
                     foreach (Prayer prayer in Core.InventoryManager.GetAllPrayers())
-                        prayer.fervourNeeded = FervourCost;
+                        prayer.fervourNeeded = DecreasedFervourCost ? REDUCED_FERVOUR_COST : NORMAL_FERVOUR_COST;
                     RandomizeNextPrayer();
                 }
                 else
