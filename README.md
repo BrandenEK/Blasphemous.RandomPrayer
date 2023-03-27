@@ -49,3 +49,5 @@
 
 This mod is available in these other languages in addition to English:
 - Spanish (Thanks to Rodol J. "ConanCimmerio" Pérez (Ro))
+- Chinese (Thanks to NewbieElton)
+- French (Thanks to Rocher)
