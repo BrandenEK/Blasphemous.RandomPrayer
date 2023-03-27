@@ -6,6 +6,7 @@ using Framework.Inventory;
 using Gameplay.UI.Others.MenuLogic;
 using Gameplay.UI.Others.UIGameLogic;
 using Gameplay.GameControllers.Penitent.Abilities;
+using System.Collections.Generic;
 
 namespace RandomPrayerUse
 {
@@ -29,12 +30,36 @@ namespace RandomPrayerUse
 
     // Load images for prayer background
     [HarmonyPatch(typeof(NewInventory_GridItem), "Awake")]
-    public class InvGridItem_Patch
+    public class InvGridItemLoad_Patch
     {
         public static void Postfix(Sprite ___frameSelected, Sprite ___backEquipped)
         {
             Main.RandomPrayer.FrameImage = ___frameSelected;
             Main.RandomPrayer.BackImage = ___backEquipped;
+        }
+    }
+
+    // Hide the next prayer to use
+    [HarmonyPatch(typeof(NewInventory_LayoutGrid), "UpdateEquipped")]
+    public class InvLayoutUpdate_Patch
+    {
+        public static void Prefix(InventoryManager.ItemType itemType, List<NewInventory_GridItem> ___cachedEquipped)
+        {
+            if (___cachedEquipped.Count > 0 && ___cachedEquipped[0] != null)
+                ___cachedEquipped[0].gameObject.SetActive(!Main.RandomPrayer.UseRandomPrayer || itemType != InventoryManager.ItemType.Prayer);
+        }
+    }
+    [HarmonyPatch(typeof(NewInventory_LayoutGrid), "IsEquipped")]
+    public class InvLayoutEquip_Patch
+    {
+        public static bool Prefix(BaseInventoryObject obj, ref bool __result)
+        {
+            if (Main.RandomPrayer.UseRandomPrayer && obj != null && obj is Prayer)
+            {
+                __result = false;
+                return false;
+            }
+            return true;
         }
     }
 
