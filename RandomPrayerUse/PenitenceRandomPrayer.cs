@@ -23,7 +23,8 @@ namespace RandomPrayerUse
 
         protected override void Deactivate()
         {
-            Main.RandomPrayer.UseRandomPrayer = false;
+            if (!Core.InventoryManager.IsRosaryBeadEquipped("RB401"))
+                Main.RandomPrayer.UseRandomPrayer = false;
         }
 
         protected override void LoadImages(out Sprite inProgress, out Sprite completed, out Sprite abandoned, out Sprite gameplay, out Sprite chooseSelected, out Sprite chooseUnselected)

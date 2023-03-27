@@ -15,7 +15,7 @@ namespace RandomPrayerUse
     {
         public static bool Prefix()
         {
-            return false;
+            return !Main.RandomPrayer.UseRandomPrayer;
         }
     }
 

@@ -22,6 +22,8 @@ namespace RandomPrayerUse
             }
         }
 
+        public bool DecreasedFervourCost { get; set; }
+
         protected override void Initialize()
         {
             RegisterPenitence(new PenitenceRandomPrayer());

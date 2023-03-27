@@ -1,5 +1,7 @@
 ﻿using ModdingAPI.Items;
 using UnityEngine;
+using Framework.Managers;
+using Framework.Penitences;
 
 namespace RandomPrayerUse
 {
@@ -31,12 +33,16 @@ namespace RandomPrayerUse
     {
         protected override void ApplyEffect()
         {
-            Main.RandomPrayer.UseRandomPrayer = true; // These need to check if the penitence is active first
+            Main.RandomPrayer.UseRandomPrayer = true;
+            Main.RandomPrayer.DecreasedFervourCost = true;
         }
 
         protected override void RemoveEffect()
         {
-            Main.RandomPrayer.UseRandomPrayer = false;
+            IPenitence pen = Core.PenitenceManager.GetCurrentPenitence();
+            if (pen != null && pen.Id != "PE_RANDOM_PRAYER")
+                Main.RandomPrayer.UseRandomPrayer = false;
+            Main.RandomPrayer.DecreasedFervourCost = false;
         }
     }
 }
