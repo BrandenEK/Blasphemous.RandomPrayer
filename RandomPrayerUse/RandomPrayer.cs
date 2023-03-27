@@ -39,12 +39,12 @@ namespace RandomPrayerUse
         }
 
         public bool DecreasedFervourCost { get; set; }
-        //public Prayer NextPrayer { get; private set; }
 
         protected override void Initialize()
         {
             RegisterPenitence(new PenitenceRandomPrayer());
             RegisterItem(new BeadRandomPrayer().AddEffect<RandomPrayerBeadEffect>());
+            DisableFileLogging = true;
         }
 
         protected override void LevelLoaded(string oldLevel, string newLevel)
@@ -67,7 +67,6 @@ namespace RandomPrayerUse
         {
             ReadOnlyCollection<Prayer> allPrayers = Core.InventoryManager.GetAllPrayers();
             int index = Random.RandomRangeInt(0, allPrayers.Count);
-            //NextPrayer = allPrayers[index];
             Core.InventoryManager.SetPrayerInSlot(0, allPrayers[index]); // Cant do this if prayer is currently active
         }
 

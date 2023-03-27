@@ -28,6 +28,21 @@ namespace RandomPrayerUse
         }
     }
 
+    // Allow Miriam portal prayer to stay activated
+    [HarmonyPatch(typeof(InventoryManager), "IsPrayerEquipped", typeof(string))]
+    public class InventoryPrayer_Patch
+    {
+        public static bool Prefix(string idPrayer, ref bool __result)
+        {
+            if (Main.RandomPrayer.UseRandomPrayer && idPrayer == "PR201")
+            {
+                __result = true;
+                return false;
+            }
+            return true;
+        }
+    }
+
     // Load images for prayer background
     [HarmonyPatch(typeof(NewInventory_GridItem), "Awake")]
     public class InvGridItemLoad_Patch
@@ -69,8 +84,9 @@ namespace RandomPrayerUse
     {
         public static void Postfix()
         {
+            Prayer prayer = Core.InventoryManager.GetPrayerInSlot(0);
             if (Main.RandomPrayer.UseRandomPrayer && Main.RandomPrayer.PrayerImage != null)
-                Main.RandomPrayer.PrayerImage.sprite = Core.InventoryManager.GetPrayerInSlot(0).picture;
+                Main.RandomPrayer.PrayerImage.sprite = prayer.picture;
         }
     }
 
