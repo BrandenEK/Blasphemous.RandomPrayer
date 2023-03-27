@@ -86,7 +86,10 @@ namespace RandomPrayerUse
         {
             Prayer prayer = Core.InventoryManager.GetPrayerInSlot(0);
             if (Main.RandomPrayer.UseRandomPrayer && Main.RandomPrayer.PrayerImage != null)
+            {
                 Main.RandomPrayer.PrayerImage.sprite = prayer.picture;
+                Main.RandomPrayer.DisplayPrayerBox = true;
+            }
         }
     }
 

@@ -39,6 +39,7 @@ namespace RandomPrayerUse
         }
 
         public bool DecreasedFervourCost { get; set; }
+        public bool DisplayPrayerBox { get; set; }
 
         protected override void Initialize()
         {
@@ -59,12 +60,19 @@ namespace RandomPrayerUse
         {
             if (PrayerImage != null && Core.Logic.Penitent != null)
             {
-                PrayerImage.transform.parent.gameObject.SetActive(UseRandomPrayer && Core.Logic.Penitent.PrayerCast.IsUsingAbility);
+                bool usingPrayer = Core.Logic.Penitent.PrayerCast.IsUsingAbility;
+                PrayerImage.transform.parent.gameObject.SetActive(usingPrayer && DisplayPrayerBox);
+                if (DisplayPrayerBox && !usingPrayer)
+                    DisplayPrayerBox = false;
             }
         }
 
         public void RandomizeNextPrayer()
         {
+            // If currently using a prayer, dont set new one
+            if (Core.Logic.Penitent.PrayerCast.IsUsingAbility)
+                return;
+
             ReadOnlyCollection<Prayer> allPrayers = Core.InventoryManager.GetAllPrayers();
             int index = Random.RandomRangeInt(0, allPrayers.Count);
             Core.InventoryManager.SetPrayerInSlot(0, allPrayers[index]); // Cant do this if prayer is currently active
