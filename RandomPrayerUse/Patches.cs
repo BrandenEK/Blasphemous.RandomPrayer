@@ -9,13 +9,21 @@ using Gameplay.GameControllers.Penitent.Abilities;
 
 namespace RandomPrayerUse
 {
-    // Dont allow equipping prayers
-    [HarmonyPatch(typeof(InventoryManager), "SetPrayerInSlot", typeof(int), typeof(Prayer))]
-    public class InventoryManager_Patch
+    // Dont allow equipping or unequipping prayers
+    [HarmonyPatch(typeof(NewInventory_LayoutGrid), "EquipObject")]
+    public class InventoryEquip_Patch
     {
-        public static bool Prefix()
+        public static bool Prefix(BaseInventoryObject obj)
         {
-            return !Main.RandomPrayer.UseRandomPrayer;
+            return !(Main.RandomPrayer.UseRandomPrayer && obj is Prayer);
+        }
+    }
+    [HarmonyPatch(typeof(NewInventory_LayoutGrid), "UnEquipObject")]
+    public class InventoryUnequip_Patch
+    {
+        public static bool Prefix(BaseInventoryObject obj)
+        {
+            return !(Main.RandomPrayer.UseRandomPrayer && obj is Prayer);
         }
     }
 
@@ -33,18 +41,30 @@ namespace RandomPrayerUse
         }
     }
 
-    // Get random prayer instead of equipped one
-    [HarmonyPatch(typeof(PrayerUse), "GetEquippedPrayer")]
-    public class PrayerUseGet_Patch
+    // Set next random prayer when done using previous one
+    [HarmonyPatch(typeof(PrayerUse), "EndUsingPrayer")]
+    public class PrayerUseEnd_Patch
     {
-        public static bool Prefix(ref Prayer __result)
+        public static void Postfix()
         {
-            ReadOnlyCollection<Prayer> allPrayers = Core.InventoryManager.GetAllPrayers();
-            int index = Random.RandomRangeInt(0, allPrayers.Count);
-            __result = allPrayers[index];
-            return false;
+            Main.RandomPrayer.RandomizeNextPrayer();
         }
     }
+
+    // Get random prayer instead of equipped one
+    //[HarmonyPatch(typeof(PrayerUse), "GetEquippedPrayer")]
+    //public class PrayerUseGet_Patch
+    //{
+    //    public static bool Prefix(ref Prayer __result)
+    //    {
+    //        if (Main.RandomPrayer.UseRandomPrayer)
+    //        {
+    //            __result = Main.RandomPrayer.NextPrayer;
+    //            return false;
+    //        }
+    //        return true;
+    //    }
+    //}
 
     // On cast start - set box image
 }

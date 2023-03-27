@@ -40,7 +40,7 @@ namespace RandomPrayerUse
         protected override void RemoveEffect()
         {
             IPenitence pen = Core.PenitenceManager.GetCurrentPenitence();
-            if (pen != null && pen.Id != "PE_RANDOM_PRAYER")
+            if (pen == null || pen.Id != "PE_RANDOM_PRAYER")
                 Main.RandomPrayer.UseRandomPrayer = false;
             Main.RandomPrayer.DecreasedFervourCost = false;
         }

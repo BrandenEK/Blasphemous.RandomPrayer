@@ -2,6 +2,7 @@
 using UnityEngine;
 using Framework.Managers;
 using Framework.Inventory;
+using System.Collections.ObjectModel;
 
 namespace RandomPrayerUse
 {
@@ -16,18 +17,37 @@ namespace RandomPrayerUse
             get { return m_UseRandomPrayer; }
             set
             {
-                m_UseRandomPrayer = value;
-                Core.InventoryManager.SetPrayerInSlot(0, (Prayer)null);
                 LogWarning("Setting random prayer to " + value);
+                m_UseRandomPrayer = value;
+
+                if (value)
+                    RandomizeNextPrayer();
+                else
+                    Core.InventoryManager.SetPrayerInSlot(0, (Prayer)null);
             }
         }
 
         public bool DecreasedFervourCost { get; set; }
+        public Prayer NextPrayer { get; private set; }
 
         protected override void Initialize()
         {
             RegisterPenitence(new PenitenceRandomPrayer());
             RegisterItem(new BeadRandomPrayer().AddEffect<RandomPrayerBeadEffect>());
+        }
+
+        protected override void Update()
+        {
+            Prayer current = Core.InventoryManager.GetPrayerInSlot(0);
+            LogWarning(current == null ? "None" : current.id);
+        }
+
+        public void RandomizeNextPrayer()
+        {
+            ReadOnlyCollection<Prayer> allPrayers = Core.InventoryManager.GetAllPrayers();
+            int index = Random.RandomRangeInt(0, allPrayers.Count);
+            NextPrayer = allPrayers[index];
+            Core.InventoryManager.SetPrayerInSlot(0, NextPrayer); // Cant do this if prayer is currently active
         }
 
         private Sprite m_FrameImage;
