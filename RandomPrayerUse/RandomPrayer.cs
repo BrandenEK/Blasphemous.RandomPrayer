@@ -1,15 +1,18 @@
 ﻿using ModdingAPI;
 using UnityEngine;
+using UnityEngine.UI;
 using Framework.Managers;
 using Framework.Inventory;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Gameplay.UI.Others.UIGameLogic;
 
 namespace RandomPrayerUse
 {
     public class RandomPrayer : Mod
     {
         public RandomPrayer(string modId, string modName, string modVersion) : base(modId, modName, modVersion) { }
-        public const float FervourCost = 35f;
+        public const int FervourCost = 35;
 
         private bool m_UseRandomPrayer;
         public bool UseRandomPrayer
@@ -21,9 +24,17 @@ namespace RandomPrayerUse
                 m_UseRandomPrayer = value;
 
                 if (value)
+                {
+                    foreach (Prayer prayer in Core.InventoryManager.GetAllPrayers())
+                        prayer.fervourNeeded = FervourCost;
                     RandomizeNextPrayer();
+                }
                 else
+                {
+                    foreach (Prayer prayer in Core.InventoryManager.GetAllPrayers())
+                        prayer.fervourNeeded = prayerCosts[prayer.id];
                     Core.InventoryManager.SetPrayerInSlot(0, (Prayer)null);
+                }
             }
         }
 
@@ -38,14 +49,10 @@ namespace RandomPrayerUse
 
         protected override void LevelLoaded(string oldLevel, string newLevel)
         {
+            if (prayerCosts == null)
+                StorePrayerCosts();
             if (newLevel != "MainMenu" && UseRandomPrayer)
                 RandomizeNextPrayer();
-        }
-
-        protected override void Update()
-        {
-            Prayer current = Core.InventoryManager.GetPrayerInSlot(0);
-            LogWarning(current == null ? "None" : current.id);
         }
 
         public void RandomizeNextPrayer()
@@ -76,6 +83,16 @@ namespace RandomPrayerUse
                 if (m_BackImage == null)
                     m_BackImage = value;
             }
+        }
+
+        public Image PrayerImage { get; set; }
+
+        private Dictionary<string, int> prayerCosts;
+        private void StorePrayerCosts()
+        {
+            prayerCosts = new Dictionary<string, int>();
+            foreach (Prayer prayer in Core.InventoryManager.GetAllPrayers())
+                prayerCosts.Add(prayer.id, prayer.fervourNeeded);
         }
     }
 }

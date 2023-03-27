@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using UnityEngine.UI;
 using Framework.Managers;
 using Framework.Inventory;
 using Gameplay.UI.Others.MenuLogic;
+using Gameplay.UI.Others.UIGameLogic;
 using Gameplay.GameControllers.Penitent.Abilities;
 
 namespace RandomPrayerUse
@@ -27,9 +29,6 @@ namespace RandomPrayerUse
         }
     }
 
-    // Always return same fervour cost
-    //[HarmonyPatch(typeof(InventoryManager), "")]
-
     // Load images for prayer background
     [HarmonyPatch(typeof(NewInventory_GridItem), "Awake")]
     public class InvGridItem_Patch
@@ -48,6 +47,38 @@ namespace RandomPrayerUse
         public static void Postfix()
         {
             Main.RandomPrayer.RandomizeNextPrayer();
+        }
+    }
+
+    // Create ui box to display current prayer
+    [HarmonyPatch(typeof(PlayerFervour), "OnLevelLoaded")]
+    public class PlayerFervour_Patch
+    {
+        public static void Postfix(PlayerFervour __instance, GameObject ___normalPrayerInUse)
+        {
+            if (Main.RandomPrayer.PrayerImage != null || Main.RandomPrayer.FrameImage == null || Main.RandomPrayer.BackImage == null) return;
+            Main.RandomPrayer.Log("Creating new prayer use image");
+
+            GameObject frameObject = Object.Instantiate(___normalPrayerInUse, __instance.transform);
+            RectTransform frameRect = frameObject.transform as RectTransform;
+            frameRect.anchorMin = new Vector2(0f, 1f);
+            frameRect.anchorMax = new Vector2(0f, 1f);
+            frameRect.pivot = new Vector2(0f, 1f);
+            frameRect.anchoredPosition = new Vector2(40f, -45f);
+            frameRect.sizeDelta = new Vector2(30f, 30f);
+            frameObject.GetComponent<Image>().sprite = Main.RandomPrayer.BackImage;
+            frameObject.SetActive(false);
+
+            GameObject imageObject = Object.Instantiate(___normalPrayerInUse, frameRect);
+            RectTransform imageRect = imageObject.transform as RectTransform;
+            imageRect.anchorMin = Vector2.zero;
+            imageRect.anchorMax = Vector2.one;
+            imageRect.pivot = new Vector2(0.5f, 0.5f);
+            imageRect.sizeDelta = Vector2.zero;
+            imageObject.SetActive(true);
+
+            Main.RandomPrayer.PrayerImage = imageObject.GetComponent<Image>();
+            Main.RandomPrayer.PrayerImage.sprite = null;
         }
     }
 
