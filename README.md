@@ -48,7 +48,7 @@
 ## Translations
 
 This mod is available in these languages:
-- English (Thanks to Astrelle)
+- English (Thanks to Astrelle Gibrillont)
 - Spanish (Thanks to Rodol J. "ConanCimmerio" Pérez (Ro))
 - Chinese (Thanks to NewbieElton)
 - French (Thanks to Rocher)
