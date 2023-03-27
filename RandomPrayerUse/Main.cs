@@ -11,7 +11,7 @@ namespace RandomPrayerUse
         public const string MOD_NAME = "Random Prayer";
         public const string MOD_VERSION = "1.0.0";
 
-        public static RandomPrayer RandomPrayer;
+        public static RandomPrayer RandomPrayer { get; private set; }
 
         private void Start()
         {

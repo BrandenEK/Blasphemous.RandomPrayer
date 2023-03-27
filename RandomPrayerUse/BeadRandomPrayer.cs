@@ -7,11 +7,11 @@ namespace RandomPrayerUse
     {
         protected override string Id => "RB401";
 
-        protected override string Name => "Reliquary of the Mistaken Heart";
+        protected override string Name => Main.RandomPrayer.Localize("itmnam");
 
-        protected override string Description => "Description for the random prayer bead";
+        protected override string Description => Main.RandomPrayer.Localize("itmdes");
 
-        protected override string Lore => "Lore for the random prayer bead";
+        protected override string Lore => Main.RandomPrayer.Localize("itmlor");
 
         protected override bool CarryOnStart => false;
 
@@ -23,7 +23,7 @@ namespace RandomPrayerUse
 
         protected override void LoadImages(out Sprite picture)
         {
-            picture = null;
+            picture = Main.RandomPrayer.FileUtil.loadDataImages("reliquary.png", 32, 32, 32, 0, true, out Sprite[] images) ? images[0] : null;
         }
     }
 
@@ -31,12 +31,12 @@ namespace RandomPrayerUse
     {
         protected override void ApplyEffect()
         {
-            // Turn on random prayer
+            Main.RandomPrayer.UseRandomPrayer = true; // These need to check if the penitence is active first
         }
 
         protected override void RemoveEffect()
         {
-            // Turn off random prayer
+            Main.RandomPrayer.UseRandomPrayer = false;
         }
     }
 }

@@ -1,10 +1,16 @@
 lang: en
 pname: Penitence of the Misheard Words
 pdesc: -Your pray is full of intention, but lacks precision.  The Miracle's whim can be cruel when understanding you.\n-Prayers can not be equipped, and when casting, a completly random one will be invoked.
+itmnam: Reliquary of the Fickle Words
+itmdes: It retains in its bosom the mark of a fulfilled penance. It entwines the heart of its bearer with the capricious whims of the Miracle, such that one's prayers are answered as the Miracle sees fit, while not weighing so heavy a toll on one's fervour.
+itmlor: To obtain forgiveness for the sin committed, the repentant must confide in the Miracle, entrusting themselves to its will completely, accepting whatever answer it deems fit. For the Father knows that several are the ways of the earnest plea, and that forgiveness can be attained through many a path.\n\n"Even as fortune favoured Baldomero, he always prayed before rolling the dice such that he would ensure a favourable roll with certainty. That was until the day someone learned of the nature of his loaded dice, so the cheater was condemned to trampling by horses to death. All that remained was this shard of his dice, ensconced in a fine layer of dust kicked up by hooves."
 
 lang: es
 pname: Penitencia de la Palabra Desoída
 pdesc: -Tu plegaria está colmada de intención, pero es parca en precisión. La veleidad del Milagro puede ser cruel al entenderte.\n-No te puedes equipar los rezos y al invocarlos se activará uno al azar.
+itmnam: Relicario de las Palabras Volubles
+itmdes: Conserva en su seno la impronta de una penitencia cumplida. Retuerce el corazón de su portador con la voluntad caprichosa del Milagro de modo que responde a las plegarias de la forma que le parezca oportuna, aunque sin drenar demasiado fervor.
+itmlor: Para obtener el perdón del pecado cometido, el que se arrepiente debe confiar en el Milagro y encomendarse plenamente a su voluntad, acatando cualquier respuesta que al Milagro le parezca conveniente. Pues bien sabe el Padre que numerosos son los caminos de la plegaria más fervorosa, y por distintos caminos se puede alcanzar el perdón.\n\n"Si bien la suerte agraciaba a Baldomero, este siempre rezaba antes de lanzar los dados para así garantizarse con toda certeza una buena jugada. Hasta que un día alguien descubrió que esos dados estaban trucados, por lo que condenaron al tahúr a morir pisoteado por caballos. Tan solo quedó este trozo de dado, oculto bajo el polvo levantado por los cascos".
 
 lang: zh
 pname: 流言忏悔

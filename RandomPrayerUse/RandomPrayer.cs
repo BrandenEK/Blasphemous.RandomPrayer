@@ -17,8 +17,8 @@ namespace RandomPrayerUse
             set
             {
                 m_UseRandomPrayer = value;
-                if (value)
-                    Core.InventoryManager.SetPrayerInSlot(0, (Prayer)null);
+                Core.InventoryManager.SetPrayerInSlot(0, (Prayer)null);
+                LogWarning("Setting random prayer to " + value);
             }
         }
 
