@@ -15,7 +15,13 @@ itmlor: Para obtener el perdón del pecado cometido, el que se arrepiente debe c
 lang: zh
 pname: 流言忏悔
 pdesc: -你的祈祷真诚但无序，让奇迹误解了你的请求\n-你无法装备祷文，吟诵时会随机触发一篇祷文的效果
+itmnam: 流言圣物匣
+itmdes: 它的心中保留着完成赎罪的标志。它以善变的异想缠绕携带者的心，令奇迹随心所欲地答复祷文，并让祷文的热诚消耗降低。
+itmlor: 己身所犯罪过若想得到宽恕，忏悔之人必须向奇迹吐露心声，全心全意把自己托付给奇迹之意志，接受它中意的任何答复。因为圣父知晓真诚恳求的诸多方式，而得到宽恕也有许多途径。\n\n“纵使巴尔多梅罗受幸运之眷顾，他总是在掷骰子之前祈祷，以使他得到欲求的点数。直到有人知晓了他所用乃是灌铅骰子，作弊的巴尔多梅罗才被处以马匹践踏之死刑。现场只留下了那骰子的残片，其上覆着一层马蹄扬起的尘埃。”
 
 lang: fr
 pname: Penitence des murmures indicibles
 pdesc: -Votre prière est pleine d'attention mais manque de précision. Le Miracle est capricieux quand il s'agit de comprendre votre vœu.\n-Impossible d'équiper de prières. Au lancement, utilise une prière totalement aléatoire.
+itmnam: Reliquaire des mots changeants
+itmdes: Il garde en son sein la marque d'une pénitence accomplie. Il entrelace le cœur de son porteur avec les capricieuses volontées du Miracle, de sorte que ses prières sont exaucées comme le Miracle l'entend, sans peser un si lourd tribut sur sa ferveur.
+itmlor: Pour se repentir de ses péchés, le pénitent doit se confier au Miracle, et se soumettre totalement à sa volonté, quelque soit la réponse de ce dernier. Car seul le Père sait que nombreuses sont les voies de la rédemption, et que le pardon vient par de nombreux chemins.\n\n"Même si la chance souriait à Baldomero, il priait toujours avant de lancer les dés de manière à assurer. Jusqu'au jour où quelqu'un dévoila que ses dés étaient pipés, et le tricheur fut condamné à mort, piétiné par des chevaux. Il ne restait plus que cet éclat de son dé, enfoui dans une fine couche de poussière soulevée par les sabots."
