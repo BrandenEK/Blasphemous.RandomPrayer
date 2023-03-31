@@ -9,7 +9,7 @@ namespace RandomPrayerUse
     {
         public const string MOD_ID = "com.author.blasphemous.random-prayer-use";
         public const string MOD_NAME = "Random Prayer";
-        public const string MOD_VERSION = "1.0.0";
+        public const string MOD_VERSION = "1.0.1";
 
         public static RandomPrayer RandomPrayer { get; private set; }
 
