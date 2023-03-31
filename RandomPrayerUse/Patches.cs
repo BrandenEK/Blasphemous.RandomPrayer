@@ -43,6 +43,17 @@ namespace RandomPrayerUse
         }
     }
 
+    // Allow library room to think you have no prayers equipped
+    [HarmonyPatch(typeof(InventoryManager), "IsAnyPrayerEquipped")]
+    public class InventoryAnyPrayer_Patch
+    {
+        public static void Postfix(ref bool __result)
+        {
+            if (Main.RandomPrayer.UseRandomPrayer)
+                __result = false;
+        }
+    }
+
     // Recalculate next prayer when obtaining new one
     [HarmonyPatch(typeof(InventoryManager), "AddPrayer", typeof(Prayer))]
     public class InventoryAdd_Patch
