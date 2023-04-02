@@ -25,7 +25,7 @@ namespace RandomPrayerUse
 
         protected override void LoadImages(out Sprite picture)
         {
-            picture = Main.RandomPrayer.FileUtil.loadDataImages("reliquary.png", 32, 32, 32, 0, true, out Sprite[] images) ? images[0] : null;
+            picture = Main.RandomPrayer.FileUtil.loadDataImages("reliquary.png", 30, 30, 32, 0, true, out Sprite[] images) ? images[0] : null;
         }
     }
 
