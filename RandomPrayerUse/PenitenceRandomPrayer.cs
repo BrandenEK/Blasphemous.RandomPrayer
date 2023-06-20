@@ -1,5 +1,5 @@
-﻿using ModdingAPI.Penitences;
-using Framework.Managers;
+﻿using Framework.Managers;
+using ModdingAPI.Penitences;
 using UnityEngine;
 
 namespace RandomPrayerUse

@@ -1,7 +1,7 @@
-﻿using ModdingAPI.Items;
-using UnityEngine;
-using Framework.Managers;
+﻿using Framework.Managers;
 using Framework.Penitences;
+using ModdingAPI.Items;
+using UnityEngine;
 
 namespace RandomPrayerUse
 {

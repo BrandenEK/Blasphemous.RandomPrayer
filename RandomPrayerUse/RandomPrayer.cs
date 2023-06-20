@@ -1,22 +1,23 @@
-﻿using ModdingAPI;
+﻿using Framework.Managers;
+using Framework.Inventory;
+using ModdingAPI;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Framework.Managers;
-using Framework.Inventory;
-using System.Collections.Generic;
 
 namespace RandomPrayerUse
 {
     public class RandomPrayer : Mod
     {
         public RandomPrayer(string modId, string modName, string modVersion) : base(modId, modName, modVersion) { }
+
         private const int NORMAL_FERVOUR_COST = 35;
         private const int REDUCED_FERVOUR_COST = 25;
 
         private bool m_UseRandomPrayer;
         public bool UseRandomPrayer
         {
-            get { return m_UseRandomPrayer; }
+            get => m_UseRandomPrayer;
             set
             {
                 m_UseRandomPrayer = value;
@@ -43,7 +44,7 @@ namespace RandomPrayerUse
         private Sprite m_FrameImage;
         public Sprite FrameImage
         {
-            get { return m_FrameImage; }
+            get => m_FrameImage;
             set
             {
                 if (m_FrameImage == null)
@@ -54,7 +55,7 @@ namespace RandomPrayerUse
         private Sprite m_BackImage;
         public Sprite BackImage
         {
-            get { return m_BackImage; }
+            get => m_BackImage;
             set
             {
                 if (m_BackImage == null)

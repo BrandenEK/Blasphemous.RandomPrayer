@@ -1,12 +1,12 @@
-﻿using HarmonyLib;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using Framework.Inventory;
 using Framework.Managers;
-using Framework.Inventory;
+using Gameplay.GameControllers.Penitent.Abilities;
 using Gameplay.UI.Others.MenuLogic;
 using Gameplay.UI.Others.UIGameLogic;
-using Gameplay.GameControllers.Penitent.Abilities;
+using HarmonyLib;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace RandomPrayerUse
 {
