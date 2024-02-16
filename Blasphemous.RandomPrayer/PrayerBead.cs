@@ -1,11 +1,11 @@
-﻿using Blasphemous.ModdingAPI.Items;
+﻿using Blasphemous.Framework.Items;
 using Framework.Managers;
 using Framework.Penitences;
 using UnityEngine;
 
 namespace Blasphemous.RandomPrayer;
 
-public class PrayerBead : ModRosaryBead
+internal class PrayerBead : ModRosaryBead
 {
     protected override string Id => "RB401";
 
@@ -15,6 +15,8 @@ public class PrayerBead : ModRosaryBead
 
     protected override string Lore => Main.RandomPrayer.LocalizationHandler.Localize("itmlor");
 
+    protected override Sprite Picture => Main.RandomPrayer.FileHandler.LoadDataAsSprite("reliquary.png", out Sprite image) ? image : null;
+
     protected override bool CarryOnStart => false;
 
     protected override bool PreserveInNGPlus => true;
@@ -22,14 +24,9 @@ public class PrayerBead : ModRosaryBead
     protected override bool AddToPercentCompletion => false;
 
     protected override bool AddInventorySlot => true;
-
-    protected override void LoadImages(out Sprite picture)
-    {
-        Main.RandomPrayer.FileHandler.LoadDataAsSprite("reliquary.png", out picture);
-    }
 }
 
-public class PrayerBeadEffect : ModItemEffectOnEquip
+internal class PrayerBeadEffect : ModItemEffectOnEquip
 {
     protected override void ApplyEffect()
     {

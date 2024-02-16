@@ -1,6 +1,6 @@
 ﻿using Blasphemous.ModdingAPI;
-using Blasphemous.ModdingAPI.Items;
-using Blasphemous.ModdingAPI.Penitence;
+using Blasphemous.Framework.Items;
+using Blasphemous.Framework.Penitence;
 using Framework.Inventory;
 using Framework.Managers;
 using System.Collections.Generic;
@@ -10,14 +10,20 @@ using UnityEngine.UI;
 
 namespace Blasphemous.RandomPrayer;
 
+/// <summary>
+/// Handles picking the random prayer to use
+/// </summary>
 public class RandomPrayer : BlasMod
 {
-    public RandomPrayer() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION) { }
+    internal RandomPrayer() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION) { }
 
     private const int NORMAL_FERVOUR_COST = 35;
     private const int REDUCED_FERVOUR_COST = 25;
 
     private bool m_UseRandomPrayer;
+    /// <summary>
+    /// Whether the effect is active
+    /// </summary>
     public bool UseRandomPrayer
     {
         get => m_UseRandomPrayer;
@@ -39,16 +45,22 @@ public class RandomPrayer : BlasMod
         }
     }
 
+    /// <summary>
+    /// Whether the bead is active and cost should be decreased
+    /// </summary>
     public bool DecreasedFervourCost { get; set; }
+    /// <summary>
+    /// Whether a prayer is active and the box should be displayed
+    /// </summary>
     public bool DisplayPrayerBox { get; set; }
 
-    public Image PrayerImage { get; set; }
+    internal Image PrayerImage { get; set; }
     private PrayerConfig Config { get; set; }
 
     private Dictionary<string, int> prayerCosts;
 
     private Sprite m_FrameImage;
-    public Sprite FrameImage
+    internal Sprite FrameImage
     {
         get => m_FrameImage;
         set
@@ -59,7 +71,7 @@ public class RandomPrayer : BlasMod
     }
 
     private Sprite m_BackImage;
-    public Sprite BackImage
+    internal Sprite BackImage
     {
         get => m_BackImage;
         set
@@ -69,18 +81,27 @@ public class RandomPrayer : BlasMod
         }
     }
 
+    /// <summary>
+    /// Register handler and load config
+    /// </summary>
     protected override void OnInitialize()
     {
         LocalizationHandler.RegisterDefaultLanguage("en");
         Config = ConfigHandler.Load<PrayerConfig>();
     }
 
+    /// <summary>
+    /// Register penitence and bead
+    /// </summary>
     protected override void OnRegisterServices(ModServiceProvider provider)
     {
         provider.RegisterPenitence(new PrayerPenitence());
         provider.RegisterItem(new PrayerBead().AddEffect(new PrayerBeadEffect()));
     }
 
+    /// <summary>
+    /// Reset flags and randomize the next prayer
+    /// </summary>
     protected override void OnLevelLoaded(string oldLevel, string newLevel)
     {
         prayerCosts ??= Core.InventoryManager.GetAllPrayers().ToDictionary(prayer => prayer.id, prayer => prayer.fervourNeeded);
@@ -96,6 +117,9 @@ public class RandomPrayer : BlasMod
         }
     }
 
+    /// <summary>
+    /// Determine whether to display the prayer box
+    /// </summary>
     protected override void OnUpdate()
     {
         if (PrayerImage != null && Core.Logic.Penitent != null)
@@ -107,6 +131,9 @@ public class RandomPrayer : BlasMod
         }
     }
 
+    /// <summary>
+    /// Selects the next prayer to use at random
+    /// </summary>
     public void RandomizeNextPrayer()
     {
         // If currently using a prayer, dont set new one

@@ -8,17 +8,21 @@
     <Product>Random Prayer</Product>
     <Authors>Damocles</Authors>
     <Company>Damocles</Company>
-    <Description>A mod for Blasphemous 1</Description>
+    <Description>Adds a new penitence that randomizes which prayer is used each time you attempt to cast one</Description>
     <Version>1.0.2</Version>
 
     <TargetName>RandomPrayerUse</TargetName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <RepositoryUrl>https://github.com/BrandenEK/Blasphemous-Random-Prayer-Use</RepositoryUrl>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>bin\Release\$(TargetName).xml</DocumentationFile>
+    <RepositoryUrl>https://github.com/BrandenEK/Blasphemous.RandomPrayer</RepositoryUrl>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blasphemous.ModdingAPI" Version="2.0.1" />
+    <PackageReference Include="Blasphemous.Framework.Items" Version="0.1.0" />
+    <PackageReference Include="Blasphemous.Framework.Penitence" Version="0.1.0" />
+    <PackageReference Include="Blasphemous.ModdingAPI" Version="2.1.0" />
     <PackageReference Include="Blasphemous.ModdingReferences" Version="4.0.67" />
   </ItemGroup>
 

@@ -1,10 +1,10 @@
-﻿using Blasphemous.ModdingAPI.Penitence;
+﻿using Blasphemous.Framework.Penitence;
 using Framework.Managers;
 using UnityEngine;
 
 namespace Blasphemous.RandomPrayer;
 
-public class PrayerPenitence : ModPenitence
+internal class PrayerPenitence : ModPenitence
 {
     protected override string Id => "PE_RANDOM_PRAYER";
 

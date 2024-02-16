@@ -1,7 +1,7 @@
 ﻿
 namespace Blasphemous.RandomPrayer;
 
-public class PrayerConfig
+internal class PrayerConfig
 {
     public bool OnlyShuffleOwnedPrayers { get; set; }
     public bool RemoveMirabras { get; set; }

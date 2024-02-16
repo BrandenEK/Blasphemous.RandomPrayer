@@ -12,7 +12,7 @@ namespace Blasphemous.RandomPrayer;
 
 // Dont allow equipping or unequipping prayers
 [HarmonyPatch(typeof(NewInventory_LayoutGrid), "EquipObject")]
-public class InventoryEquip_Patch
+class InventoryEquip_Patch
 {
     public static bool Prefix(BaseInventoryObject obj)
     {
@@ -20,7 +20,7 @@ public class InventoryEquip_Patch
     }
 }
 [HarmonyPatch(typeof(NewInventory_LayoutGrid), "UnEquipObject")]
-public class InventoryUnequip_Patch
+class InventoryUnequip_Patch
 {
     public static bool Prefix(BaseInventoryObject obj)
     {
@@ -30,7 +30,7 @@ public class InventoryUnequip_Patch
 
 // Allow Miriam portal prayer to stay activated
 [HarmonyPatch(typeof(InventoryManager), "IsPrayerEquipped", typeof(string))]
-public class InventoryPrayer_Patch
+class InventoryPrayer_Patch
 {
     public static bool Prefix(string idPrayer, ref bool __result)
     {
@@ -45,7 +45,7 @@ public class InventoryPrayer_Patch
 
 // Allow library room to think you have no prayers equipped
 [HarmonyPatch(typeof(InventoryManager), "IsAnyPrayerEquipped")]
-public class InventoryAnyPrayer_Patch
+class InventoryAnyPrayer_Patch
 {
     public static void Postfix(ref bool __result)
     {
@@ -56,7 +56,7 @@ public class InventoryAnyPrayer_Patch
 
 // Recalculate next prayer when obtaining new one
 [HarmonyPatch(typeof(InventoryManager), "AddPrayer", typeof(Prayer))]
-public class InventoryAdd_Patch
+class InventoryAdd_Patch
 {
     public static void Postfix()
     {
@@ -67,7 +67,7 @@ public class InventoryAdd_Patch
 
 // Load images for prayer background
 [HarmonyPatch(typeof(NewInventory_GridItem), "Awake")]
-public class InvGridItemLoad_Patch
+class InvGridItemLoad_Patch
 {
     public static void Postfix(Sprite ___frameSelected, Sprite ___backEquipped)
     {
@@ -78,7 +78,7 @@ public class InvGridItemLoad_Patch
 
 // Hide the next prayer to use
 [HarmonyPatch(typeof(NewInventory_LayoutGrid), "UpdateEquipped")]
-public class InvLayoutUpdate_Patch
+class InvLayoutUpdate_Patch
 {
     public static void Prefix(InventoryManager.ItemType itemType, List<NewInventory_GridItem> ___cachedEquipped)
     {
@@ -87,7 +87,7 @@ public class InvLayoutUpdate_Patch
     }
 }
 [HarmonyPatch(typeof(NewInventory_LayoutGrid), "IsEquipped")]
-public class InvLayoutEquip_Patch
+class InvLayoutEquip_Patch
 {
     public static bool Prefix(BaseInventoryObject obj, ref bool __result)
     {
@@ -102,7 +102,7 @@ public class InvLayoutEquip_Patch
 
 // Set image for ui box when starting prayer
 [HarmonyPatch(typeof(PrayerUse), "OnCastStart")]
-public class PrayerUseStart_Patch
+class PrayerUseStart_Patch
 {
     public static void Postfix()
     {
@@ -117,7 +117,7 @@ public class PrayerUseStart_Patch
 
 // Set next random prayer when done using previous one
 [HarmonyPatch(typeof(PrayerUse), "EndUsingPrayer")]
-public class PrayerUseEnd_Patch
+class PrayerUseEnd_Patch
 {
     public static void Postfix()
     {
@@ -128,7 +128,7 @@ public class PrayerUseEnd_Patch
 
 // Create ui box to display current prayer
 [HarmonyPatch(typeof(PlayerFervour), "OnLevelLoaded")]
-public class PlayerFervourCreate_Patch
+class PlayerFervourCreate_Patch
 {
     public static void Postfix(PlayerFervour __instance, GameObject ___normalPrayerInUse)
     {
