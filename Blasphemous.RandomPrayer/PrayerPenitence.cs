@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Blasphemous.RandomPrayer;
 
-internal class PrayerPenitence : ModPenitence
+internal class PrayerPenitence : ModPenitenceWithBead
 {
     protected override string Id => "PE_RANDOM_PRAYER";
 
@@ -12,9 +12,33 @@ internal class PrayerPenitence : ModPenitence
 
     protected override string Description => Main.RandomPrayer.LocalizationHandler.Localize("pdesc");
 
-    protected override string ItemIdToGive => "RB401";
+    protected override string BeadId => "RB401";
 
-    protected override InventoryManager.ItemType ItemTypeToGive => InventoryManager.ItemType.Bead;
+    protected override PenitenceImageCollection Images
+    {
+        get
+        {
+            Main.RandomPrayer.FileHandler.LoadDataAsVariableSpritesheet("penitence.png",
+            [
+                new Rect(0, 0, 94, 110),
+                new Rect(95, 1, 92, 108),
+                new Rect(190, 94, 16, 16),
+                new Rect(190, 78, 16, 16),
+                new Rect(190, 62, 16, 16),
+                new Rect(188, 0, 18, 18)
+            ], out Sprite[] images);
+
+            return new PenitenceImageCollection()
+            {
+                ChooseSelected = images[0],
+                ChooseUnselected = images[1],
+                InProgress = images[2],
+                Completed = images[3],
+                Abandoned = images[4],
+                Gameplay = images[5]
+            };
+        }
+    }
 
     protected override void Activate()
     {
@@ -25,18 +49,5 @@ internal class PrayerPenitence : ModPenitence
     {
         if (!Core.InventoryManager.IsRosaryBeadEquipped("RB401"))
             Main.RandomPrayer.UseRandomPrayer = false;
-    }
-
-    protected override void LoadImages(out Sprite inProgress, out Sprite completed, out Sprite abandoned, out Sprite gameplay, out Sprite chooseSelected, out Sprite chooseUnselected)
-    {
-        bool loaded = Main.RandomPrayer.FileHandler.LoadDataAsFixedSpritesheet("menuSlots.png", new Vector2(16, 16), out Sprite[] menuSlotImages);
-
-        inProgress = loaded ? menuSlotImages[0] : null;
-        completed = loaded ? menuSlotImages[1] : null;
-        abandoned = loaded ? menuSlotImages[2] : null;
-
-        Main.RandomPrayer.FileHandler.LoadDataAsSprite("gameSlot.png", out gameplay);
-        Main.RandomPrayer.FileHandler.LoadDataAsSprite("chooseSlotSelected.png", out chooseSelected);
-        Main.RandomPrayer.FileHandler.LoadDataAsSprite("chooseSlotUnselected.png", out chooseUnselected);
     }
 }
