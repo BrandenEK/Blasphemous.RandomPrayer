@@ -9,7 +9,7 @@
     <Authors>Damocles</Authors>
     <Company>Damocles</Company>
     <Description>Adds a new penitence that randomizes which prayer is used each time you attempt to cast one</Description>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
 
     <TargetName>RandomPrayerUse</TargetName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
