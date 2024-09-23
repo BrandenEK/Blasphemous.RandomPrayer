@@ -14,7 +14,7 @@
     <TargetName>RandomPrayerUse</TargetName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>bin\Release\$(TargetName).xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetName).xml</DocumentationFile>
     <RepositoryUrl>https://github.com/BrandenEK/Blasphemous.RandomPrayer</RepositoryUrl>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -22,8 +22,8 @@
   <ItemGroup>
     <PackageReference Include="Blasphemous.Framework.Items" Version="0.1.0" />
     <PackageReference Include="Blasphemous.Framework.Penitence" Version="0.2.0" />
+    <PackageReference Include="Blasphemous.GameLibs" Version="4.0.67" />
     <PackageReference Include="Blasphemous.ModdingAPI" Version="2.1.0" />
-    <PackageReference Include="Blasphemous.ModdingReferences" Version="4.0.67" />
   </ItemGroup>
 
   <Target Name="Development" AfterTargets="PostBuildEvent">
