@@ -1,4 +1,5 @@
-﻿using Framework.Inventory;
+﻿using Blasphemous.ModdingAPI;
+using Framework.Inventory;
 using Framework.Managers;
 using Gameplay.GameControllers.Penitent.Abilities;
 using Gameplay.UI.Others.MenuLogic;
@@ -11,7 +12,7 @@ using UnityEngine.UI;
 namespace Blasphemous.RandomPrayer;
 
 // Dont allow equipping or unequipping prayers
-[HarmonyPatch(typeof(NewInventory_LayoutGrid), "EquipObject")]
+[HarmonyPatch(typeof(NewInventory_LayoutGrid), nameof(NewInventory_LayoutGrid.EquipObject))]
 class InventoryEquip_Patch
 {
     public static bool Prefix(BaseInventoryObject obj)
@@ -19,7 +20,7 @@ class InventoryEquip_Patch
         return !(Main.RandomPrayer.UseRandomPrayer && obj is Prayer);
     }
 }
-[HarmonyPatch(typeof(NewInventory_LayoutGrid), "UnEquipObject")]
+[HarmonyPatch(typeof(NewInventory_LayoutGrid), nameof(NewInventory_LayoutGrid.UnEquipObject))]
 class InventoryUnequip_Patch
 {
     public static bool Prefix(BaseInventoryObject obj)
@@ -29,7 +30,7 @@ class InventoryUnequip_Patch
 }
 
 // Allow Miriam portal prayer to stay activated
-[HarmonyPatch(typeof(InventoryManager), "IsPrayerEquipped", typeof(string))]
+[HarmonyPatch(typeof(InventoryManager), nameof(InventoryManager.IsPrayerEquipped), typeof(string))]
 class InventoryPrayer_Patch
 {
     public static bool Prefix(string idPrayer, ref bool __result)
@@ -44,7 +45,7 @@ class InventoryPrayer_Patch
 }
 
 // Allow library room to think you have no prayers equipped
-[HarmonyPatch(typeof(InventoryManager), "IsAnyPrayerEquipped")]
+[HarmonyPatch(typeof(InventoryManager), nameof(InventoryManager.IsAnyPrayerEquipped))]
 class InventoryAnyPrayer_Patch
 {
     public static void Postfix(ref bool __result)
@@ -55,7 +56,7 @@ class InventoryAnyPrayer_Patch
 }
 
 // Recalculate next prayer when obtaining new one
-[HarmonyPatch(typeof(InventoryManager), "AddPrayer", typeof(Prayer))]
+[HarmonyPatch(typeof(InventoryManager), nameof(InventoryManager.AddPrayer), typeof(Prayer))]
 class InventoryAdd_Patch
 {
     public static void Postfix()
@@ -66,7 +67,7 @@ class InventoryAdd_Patch
 }
 
 // Load images for prayer background
-[HarmonyPatch(typeof(NewInventory_GridItem), "Awake")]
+[HarmonyPatch(typeof(NewInventory_GridItem), nameof(NewInventory_GridItem.Awake))]
 class InvGridItemLoad_Patch
 {
     public static void Postfix(Sprite ___frameSelected, Sprite ___backEquipped)
@@ -77,7 +78,7 @@ class InvGridItemLoad_Patch
 }
 
 // Hide the next prayer to use
-[HarmonyPatch(typeof(NewInventory_LayoutGrid), "UpdateEquipped")]
+[HarmonyPatch(typeof(NewInventory_LayoutGrid), nameof(NewInventory_LayoutGrid.UpdateEquipped))]
 class InvLayoutUpdate_Patch
 {
     public static void Prefix(InventoryManager.ItemType itemType, List<NewInventory_GridItem> ___cachedEquipped)
@@ -86,7 +87,7 @@ class InvLayoutUpdate_Patch
             ___cachedEquipped[0].gameObject.SetActive(!Main.RandomPrayer.UseRandomPrayer || itemType != InventoryManager.ItemType.Prayer);
     }
 }
-[HarmonyPatch(typeof(NewInventory_LayoutGrid), "IsEquipped")]
+[HarmonyPatch(typeof(NewInventory_LayoutGrid), nameof(NewInventory_LayoutGrid.IsEquipped))]
 class InvLayoutEquip_Patch
 {
     public static bool Prefix(BaseInventoryObject obj, ref bool __result)
@@ -101,7 +102,7 @@ class InvLayoutEquip_Patch
 }
 
 // Set image for ui box when starting prayer
-[HarmonyPatch(typeof(PrayerUse), "OnCastStart")]
+[HarmonyPatch(typeof(PrayerUse), nameof(PrayerUse.OnCastStart))]
 class PrayerUseStart_Patch
 {
     public static void Postfix()
@@ -116,7 +117,7 @@ class PrayerUseStart_Patch
 }
 
 // Set next random prayer when done using previous one
-[HarmonyPatch(typeof(PrayerUse), "EndUsingPrayer")]
+[HarmonyPatch(typeof(PrayerUse), nameof(PrayerUse.EndUsingPrayer))]
 class PrayerUseEnd_Patch
 {
     public static void Postfix()
@@ -127,14 +128,15 @@ class PrayerUseEnd_Patch
 }
 
 // Create ui box to display current prayer
-[HarmonyPatch(typeof(PlayerFervour), "OnLevelLoaded")]
+[HarmonyPatch(typeof(PlayerFervour), nameof(PlayerFervour.OnLevelLoaded))]
 class PlayerFervourCreate_Patch
 {
     public static void Postfix(PlayerFervour __instance, GameObject ___normalPrayerInUse)
     {
         if (Main.RandomPrayer.PrayerImage != null || Main.RandomPrayer.FrameImage == null || Main.RandomPrayer.BackImage == null)
             return;
-        Main.RandomPrayer.Log("Creating new prayer use image");
+
+        ModLog.Info("Creating new prayer use image");
 
         GameObject frameObject = Object.Instantiate(___normalPrayerInUse, __instance.transform);
         RectTransform frameRect = frameObject.transform as RectTransform;
